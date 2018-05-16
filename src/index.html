@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sirti Alert</title>
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.css">
+<!-- <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" /> -->
+
+<!-- <link rel="stylesheet" href="sirti-column-sort-and-filter.css" /> -->
+
+</head>
+<body style="padding-top: 30px">
+
+<div ng-app="sApp" ng-controller="sCtrl" class="container">
+	<sirti-alert></sirti-alert>
+  <div class="row">
+    <div class="col-md-12">
+      Alert type:
+      <select ng-model="alertType">
+        <option>info</option>
+        <option>success</option>
+        <option>warning</option>
+        <option>error</option>
+        <option>fatal</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-default" ng-click="openAlert()">open floating alert</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-default" ng-click="openSirtiErrorAlert()">open floating sirti-error alert</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-default" ng-click="openObjectAlert()">open floating object alert</button>
+    </div>
+  </div>
+	<div class="row">
+		<div class="col-md-12">
+			<button class="btn btn-default" ng-click="openAlert(1)">open inline alert</button>
+		</div>
+		<div class="col-md-12">
+			<sirti-alert reference="1" inline="true"></sirti-alert>
+		</div>
+	</div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-default" ng-click="clearAlerts()">clear alerts</button>
+    </div>
+  </div>
+</div>
+
+<!-- <script src="bower_components/jquery/dist/jquery.min.js"></script> -->
+<script src="bower_components/angular/angular.min.js"></script>
+<!-- <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
+
+<script src="sirti-alert.js"></script>
+
+<!-- <script src="bower_components/underscore/underscore-min.js"></script> -->
+<!-- <script src="bower_components/angular-resource/angular-resource.min.js"></script> -->
+
+<script src="app.js"></script>
+
+</body>
+</html>

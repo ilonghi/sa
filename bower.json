@@ -1,0 +1,32 @@
+{
+  "name": "sirti-alert",
+  "version": "0.2.0",
+  "main": [
+    "dist/sirti-alert.js"
+  ],
+  "authors": [
+    "Ivan Longhi <i.longhi@ext.sirti.it>",
+    "Alvaro Livraghi <a.livraghi@sirti.it>",
+    "Rizzardo Belotti <r.belotti@ext.sirti.it>",
+    "Massimo Vasile <m.vasile@sirti.it>"
+  ],
+  "description": "Simple directive for ...",
+  "dependencies": {
+    "angular": "1.5.8",
+    "angular-animate": "1.5.8",
+    "bootstrap": "^3.3.7",
+    "angular-growl-v2": "^0.7.9"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {}
+}
