@@ -120,3 +120,15 @@
   ;
 
 })();
+angular.module('sirti-alert').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('sirti-alert.html',
+    "<div growl\n" +
+    "\treference=\"{{reference}}\"\n" +
+    "\tinline=\"inline\"\n" +
+    "\tlimit-messages=\"limitMessages\"\n" +
+    "></div>"
+  );
+
+}]);
