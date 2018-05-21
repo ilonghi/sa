@@ -24,9 +24,11 @@ angular
 
   $scope.openSirtiErrorAlert = function() {
     sirtiAlert[$scope.alertType]({
-      message: 'bla bla bla',
-      internalMessage: 'verbose bla bla bla',
-      UUID: '644e7005a42a1269c390a4ac9fe149be'
+      data: {
+        message: 'bla bla bla',
+        internalMessage: 'verbose bla bla bla',
+        UUID: '644e7005a42a1269c390a4ac9fe149be'
+      }
     });
   };
 
