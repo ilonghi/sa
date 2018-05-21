@@ -10,13 +10,16 @@
   }
 
   function formatMsg(o) {
-    var msg = '';
+    var msg;
     if(angular.isObject(o)) {
-      msg += o.message ? '<div><p>' + o.message + '</p></div>' : '';
-      msg += o.internalMessage ? '<div><p><em>Error detail</em>: ' + o.internalMessage + '</p></div>' : '';
-      msg += o.UUID ? '<div class="push-right small uuid">(UUID: <code>' + o.UUID + '</code>)</div>' : '';
-      if(msg === '') {
-        msg = '<div><p><em>Unknown message</em></p></div>';
+      if(angular.isObject(o.data) && o.data.message && o.data.UUID) {
+        msg = '<div><p>' + o.data.message + '</p></div>';
+        msg += o.data.internalMessage ? '<div><p><em>Error detail</em>: ' + o.data.internalMessage + '</p></div>' : '';
+        msg += '<div>(UUID: <code>' + o.data.UUID + '</code>)</div>';
+      } else if(o.data === '' && o.status !== -1 && o.statusText) {
+        msg = '<div><p><em>' + o.status + ' ' + o.statusText + '</em></p></div>';
+      } else {
+        msg = '<div><p><em>Unknown error</em></p></div>';
       }
     } else {
       msg = o;
