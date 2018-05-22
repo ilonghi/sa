@@ -2,11 +2,55 @@
 
   'use strict';
 
+  angular
+
+    .module('sirti-utils', [
+      'angular-growl',
+      'ngAnimate',
+      'ngSanitize',
+      'ui.bootstrap'
+    ])
+
+    .provider('sirtiUtilsConfig', function (growlProvider) {
+      var that = this;
+      this.sirtiAlertPosition = 'top-center';
+      this.setSirtiAlertPosition = function(position) {
+        that.sirtiAlertPosition = position;
+        growlProvider.globalPosition(that.sirtiAlertPosition);
+      };
+      this.sirtiAlertDefaultLimitMessages = 5;
+      this.setSirtiAlertDefaultLimitMessages = function(defaultLimitMessages) {
+        this.sirtiAlertDefaultLimitMessages = defaultLimitMessages;
+      };
+      this.$get = function () {
+        return this;
+      };
+    })
+
+    .config(function(growlProvider, sirtiUtilsConfigProvider) {
+      growlProvider.globalTimeToLive({
+        success : 3000,
+        error : 3000,
+        warning : 3000,
+        info : 3000
+      });
+      growlProvider.globalPosition(sirtiUtilsConfigProvider.sirtiAlertPosition);
+      growlProvider.globalInlineMessages(false);
+      growlProvider.onlyUniqueMessages(false);
+    })
+
+  ;
+
+})();
+(function () {
+
+  'use strict';
+
   const defaultReference = 9999999;
 
-  function sirtiAlertCtrl($scope, sirtiAlertConfig) {
+  function sirtiAlertCtrl($scope, sirtiUtilsConfig) {
     $scope.reference = $scope.reference || defaultReference;
-    $scope.limitMessages = $scope.limitMessages || sirtiAlertConfig.defaultLimitMessages;
+    $scope.limitMessages = $scope.limitMessages || sirtiUtilsConfig.sirtiAlertDefaultLimitMessages;
   }
 
   function formatMsg(o) {
@@ -45,35 +89,9 @@
     messages.push(growl[type](formatMsg(msg), config));
   }
 
-  angular.module('sirti-alert', ['angular-growl', 'ngAnimate'])
-
-    .provider('sirtiAlertConfig', function (growlProvider) {
-      var that = this;
-      this.position = 'top-center';
-      this.setPosition = function(position) {
-        that.position = position;
-        growlProvider.globalPosition(that.position);
-      };
-      this.defaultLimitMessages = 5;
-      this.setDefaultLimitMessages = function(defaultLimitMessages) {
-        this.defaultLimitMessages = defaultLimitMessages;
-      };
-      this.$get = function () {
-        return this;
-      };
-    })
-
-    .config(function(growlProvider, sirtiAlertConfigProvider) {
-      growlProvider.globalTimeToLive({
-        success : 3000,
-        error : 3000,
-        warning : 3000,
-        info : 3000
-      });
-      growlProvider.globalPosition(sirtiAlertConfigProvider.position);
-      growlProvider.globalInlineMessages(false);
-      growlProvider.onlyUniqueMessages(false);
-    })
+  angular
+  
+    .module('sirti-utils')
 
     .factory('sirtiAlert', function(growl) {
       var messages = [];
@@ -115,7 +133,7 @@
           inline: '=',
           limitMessages: '@'
         },
-        templateUrl: 'sirti-alert.html',
+        templateUrl: 'views/directives/sirti-alert.html',
         controller: sirtiAlertCtrl
       };
     })
@@ -123,3 +141,47 @@
   ;
 
 })();
+(function() {
+
+  'use strict';
+
+  angular
+
+    .module('sirti-utils')
+
+    .service('sirtiLoadingModal', function($uibModal, sirtiAlert) {
+      this.open = function() {
+        sirtiAlert.clear();
+        return $uibModal.open({
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/services/sirti-loading-modal.html',
+          keyboard: false,
+          backdrop: 'static'
+        });
+      };
+    })
+
+  ;
+
+})();
+angular.module('sirti-utils').run(['$templateCache', function($templateCache) {
+  'use strict';
+
+  $templateCache.put('views/directives/sirti-alert.html',
+    "<div growl\n" +
+    "\treference=\"{{reference}}\"\n" +
+    "\tinline=\"inline\"\n" +
+    "\tlimit-messages=\"limitMessages\"\n" +
+    "></div>"
+  );
+
+
+  $templateCache.put('views/services/sirti-loading-modal.html',
+    "<div class=\"modal-dialog modal-sm text-center\">\n" +
+    "\t<div class=\"sirti-utils-loading-modal\">\n" +
+    "\t\t<span class=\"glyphicon glyphicon-repeat sirti-utils-glyphicon-animate\"></span>\n" +
+    "\t</div>\n" +
+    "</div>"
+  );
+
+}]);

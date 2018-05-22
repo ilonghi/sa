@@ -4,9 +4,9 @@
 
   const defaultReference = 9999999;
 
-  function sirtiAlertCtrl($scope, sirtiAlertConfig) {
+  function sirtiAlertCtrl($scope, sirtiUtilsConfig) {
     $scope.reference = $scope.reference || defaultReference;
-    $scope.limitMessages = $scope.limitMessages || sirtiAlertConfig.defaultLimitMessages;
+    $scope.limitMessages = $scope.limitMessages || sirtiUtilsConfig.sirtiAlertDefaultLimitMessages;
   }
 
   function formatMsg(o) {
@@ -45,35 +45,9 @@
     messages.push(growl[type](formatMsg(msg), config));
   }
 
-  angular.module('sirti-alert', ['angular-growl', 'ngAnimate'])
-
-    .provider('sirtiAlertConfig', function (growlProvider) {
-      var that = this;
-      this.position = 'top-center';
-      this.setPosition = function(position) {
-        that.position = position;
-        growlProvider.globalPosition(that.position);
-      };
-      this.defaultLimitMessages = 5;
-      this.setDefaultLimitMessages = function(defaultLimitMessages) {
-        this.defaultLimitMessages = defaultLimitMessages;
-      };
-      this.$get = function () {
-        return this;
-      };
-    })
-
-    .config(function(growlProvider, sirtiAlertConfigProvider) {
-      growlProvider.globalTimeToLive({
-        success : 3000,
-        error : 3000,
-        warning : 3000,
-        info : 3000
-      });
-      growlProvider.globalPosition(sirtiAlertConfigProvider.position);
-      growlProvider.globalInlineMessages(false);
-      growlProvider.onlyUniqueMessages(false);
-    })
+  angular
+  
+    .module('sirti-utils')
 
     .factory('sirtiAlert', function(growl) {
       var messages = [];
@@ -115,7 +89,7 @@
           inline: '=',
           limitMessages: '@'
         },
-        templateUrl: 'sirti-alert.html',
+        templateUrl: 'views/directives/sirti-alert.html',
         controller: sirtiAlertCtrl
       };
     })
@@ -123,15 +97,3 @@
   ;
 
 })();
-angular.module('sirti-alert').run(['$templateCache', function($templateCache) {
-  'use strict';
-
-  $templateCache.put('sirti-alert.html',
-    "<div growl\n" +
-    "\treference=\"{{reference}}\"\n" +
-    "\tinline=\"inline\"\n" +
-    "\tlimit-messages=\"limitMessages\"\n" +
-    "></div>"
-  );
-
-}]);

@@ -4,23 +4,27 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		ngtemplates : {
-			'sirti-alert': {
+			'sirti-utils': {
 				cwd: './src',
-				src : 'sirti-alert.html', // where my view files are
+				src : 'views/**/*.html', // where my view files are
 				dest : '.tmp/tpl.js', // single file of $templateCache
-				standalone: false	// expects module 'sirti-alert' is available (default=false)
+				standalone: false	// expects module 'sirti-utils' is available (default=false)
 			}
 		},
 		concat : {
 			dist : {
-				src : [ 'src/sirti-alert.js', '.tmp/tpl.js' ],
-				dest : 'dist/sirti-alert.js'
+				src : [ 'src/sirti-utils.js', 'src/scripts/**/*.js', '.tmp/tpl.js' ],
+				dest : 'dist/sirti-utils.js'
 			},
+			distcss : {
+				src : [ 'src/css/*.css' ],
+				dest : 'dist/sirti-utils.css'
+			}
 		},
 		watch: {
 			js: {
 				files: [
-					'./src/*.js'
+					'./src/**/*.js'
 				],
 				tasks: [
 					'newer:jshint:all',
@@ -35,7 +39,8 @@ module.exports = function(grunt) {
 					livereload: '<%= connect.options.livereload %>'
 				},
 				files: [
-					'./src/*.html'
+					'./src/**/*.html',
+					'./src/**/*.css'
 				]
 			},
 			gruntfile: {
@@ -57,6 +62,10 @@ module.exports = function(grunt) {
 						return [
 							connect.static('./src'),
 							connect().use(
+								'/dist',
+								connect.static('./dist')
+							),
+							connect().use(
 								'/bower_components',
 								connect.static('./bower_components')
 							)
@@ -73,7 +82,7 @@ module.exports = function(grunt) {
 			all: {
 				src: [
 					'Gruntfile.js',
-					'src/*.js'
+					'src/**/*.js'
 				]
 			}
 		},
@@ -84,7 +93,7 @@ module.exports = function(grunt) {
 			all: {
 				src: [
 					'Gruntfile.js',
-					'src/*.js'
+					'src/**/*.js'
 				]
 			}
 		}
@@ -98,7 +107,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-newer');
 
-	grunt.registerTask('build', [ 'newer:jshint', 'newer:jscs', 'ngtemplates:sirti-alert', 'concat:dist' ]);
+	grunt.registerTask('build', [ 'newer:jshint', 'newer:jscs', 'ngtemplates:sirti-utils', 'concat:dist', 'concat:distcss' ]);
 
 	grunt.registerTask('serve', [ 'connect:livereload', 'watch' ]);
 

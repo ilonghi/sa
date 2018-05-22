@@ -2,15 +2,20 @@
 
 angular
 
-.module('sApp', ['sirti-alert'])
+.module('sApp', ['sirti-utils'])
 
-.config(function(sirtiAlertConfigProvider) {
-  sirtiAlertConfigProvider.setPosition('top-right');
-  sirtiAlertConfigProvider.setDefaultLimitMessages(3);
+.config(function(sirtiUtilsConfigProvider) {
+  sirtiUtilsConfigProvider.setSirtiAlertPosition('top-right');
+  sirtiUtilsConfigProvider.setSirtiAlertDefaultLimitMessages(3);
 })
 
 
-.controller('sCtrl', function($scope, sirtiAlert) {
+.controller('sCtrl', function(
+    $scope,
+    $timeout,
+    sirtiAlert,
+    sirtiLoadingModal
+  ) {
 
   $scope.alertType = 'info';
 
@@ -41,6 +46,13 @@ angular
 
   $scope.clearAlerts = function() {
     sirtiAlert.clear();
+  };
+
+  $scope.openLoadingModal = function() {
+    var loadingModal = sirtiLoadingModal.open();
+    $timeout(function() {
+      loadingModal.close();
+    }, 3000);
   };
 
 })

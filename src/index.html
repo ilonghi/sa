@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sirti Alert</title>
+<title>Sirti Utils</title>
+
 <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.css">
+
+<link rel="stylesheet" href="css/sirti-utils.css">
+
+<!-- 
+<link rel="stylesheet" href="dist/sirti-utils.css">
+ -->
+
 </head>
 <body style="padding-top: 30px">
 
@@ -49,13 +58,28 @@
       <button class="btn btn-default" ng-click="clearAlerts()">clear alerts</button>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-default" ng-click="openLoadingModal()">open loading modal</button>
+    </div>
+  </div>
 </div>
 
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-<script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
 
-<script src="sirti-alert.js"></script>
+<script src="sirti-utils.js"></script>
+<script src="scripts/services/sirti-loading-modal.js"></script>
+<script src="scripts/directives/sirti-alert.js"></script>
+
+<!-- 
+<script src="dist/sirti-utils.js"></script>
+ -->
 
 <script src="app.js"></script>
 
