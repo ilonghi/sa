@@ -18,7 +18,7 @@ bower install --save sirti-utils=http://dvmas003.ict.sirti.net:10090/git/js-ng-s
 I file da includere nel progetto si troveranno al seguente path `bower_components/sirti-utils/dist`:
 
 ```html
-<script src="bower_components/sirti-utils/dist/sirti-utils.js"></script>
+<link rel="stylesheet" href="bower_components/sirti-utils/dist/sirti-utils.css">
 <script src="bower_components/sirti-utils/dist/sirti-utils.js"></script>
 ```
 
@@ -50,10 +50,6 @@ E' inoltre necessario caricare le seguenti dipendenze:
 ## Documentation
 
 Puoi trovare esempi di utilizzo nei file `index.html` e `app.js` nella cartella `src`.
-
-### Direttive
-
-#### sirti-alert
 
 ### Servizi
 
